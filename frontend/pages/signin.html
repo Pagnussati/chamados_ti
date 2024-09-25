@@ -183,11 +183,12 @@
       // Inserindo no banco de dados
       $.ajax({
         type: 'POST',
-        url: 'http://localhost/teste-webbrain/frontend/pages/signin.html/../../../backend/create_user.php',
+        url: 'http://localhost/teste-webbrain/backend/create_user.php',
         data: formData,
         success: function(response) {
             if (response.success) {
                 alert('Usuário criado com sucesso!');
+                window.location.href = 'http://localhost/teste-webbrain/frontend/pages/login.html'
             } else {
                 alert('Erro: ' + response.message);
             }

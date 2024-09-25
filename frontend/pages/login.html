@@ -69,7 +69,8 @@
               success: function(response) {
                   if (response === "Login successful!") {
                       // Redirect to dashboard or any other page
-                      window.location.href = 'dashboard.html';
+                      window.location.href = 'dashboard.php';
+                      event.preventDefault();
                   } else {
                       alert(response);
                   }

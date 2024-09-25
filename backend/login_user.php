@@ -16,10 +16,10 @@
               $_SESSION['email'] = $email;
               echo "Login successful!";
           } else {
-              echo "Invalid password";
+              echo "Senha incorreta!";
           }
       } else {
-          echo "User not found";
+          echo "Usuário não encontrado!";
       }
   }
 ?>

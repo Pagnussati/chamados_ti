@@ -35,65 +35,65 @@
 
   <div class="form-div">
     <form id="createUserForm">
-      <div class="row mb-3">
-        <label for="name" class="col-sm-2 col-form-label-md">Nome</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="name" placeholder="Digite seu nome" required>
-        </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="name" placeholder="Digite seu nome" required>
       </div>
-      <div class="row mb-3">
-        <label for="birthDate" class="col-sm-2 col-form-label-md">Data de Nascimento</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="birthDate" required> 
-          <p class="warning" id="adultWarn"></p>
-        </div>
+
+      <div class="mb-3">
+        <label for="birthDate" class="form-label">Data de Nascimento</label>
+        <input type="text" class="form-control" id="birthDate" placeholder="aaaa/mm/dd" required>
+        <p class="warning" id="adultWarn"></p>
       </div>
-      <div class="row mb-3">
-        <label for="user" class="col-sm-2 col-form-label-md">Email</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="user" placeholder="Digite seu e-mail" required>
-          <p class="warning" id="emailWarn"></p>
-        </div>
+
+      <div class="mb-3">
+        <label for="user" class="form-label">Email</label>
+        <input type="email" class="form-control" id="user" placeholder="Digite seu e-mail" required>
+        <p class="warning" id="emailWarn"></p>
       </div>
-      <div class="row mb-3">
-        <label for="telephone" class="col-sm-2 col-form-label-md">Telefone</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="telephone" placeholder="(00) 0000-0000" required>
-        </div>
+
+      <div class="mb-3">
+        <label for="telephone" class="form-label">Telefone</label>
+        <input type="text" class="form-control" id="telephone" placeholder="(00) 0000-0000" required>
       </div>
-      <div class="row mb-3">
-        <label for="cellphone" class="col-sm-2 col-form-label-md">Whatsapp</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="cellphone" placeholder="(00) 00000-0000" required>
-        </div>
+
+      <div class="mb-3">
+        <label for="cellphone" class="form-label">Whatsapp</label>
+        <input type="text" class="form-control" id="cellphone" placeholder="(00) 00000-0000" required>
       </div>
-      <div class="row mb-3">
-        <label for="city" class="col-sm-2 col-form-label-md">Cidade</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="city" placeholder="Digite sua cidade" required>
-        </div>
+
+      <div class="mb-3">
+        <label for="state" class="form-label">Estado</label>
+        <select class="form-select" id="state" required>
+          <option value="">Selecione um estado</option>
+        </select>
       </div>
-      <div class="row mb-3">
-        <label for="state" class="col-sm-2 col-form-label-md">Estado</label required>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="state">
-        </div>
+
+      <div class="mb-3">
+        <label for="city" class="form-label">Cidade</label>
+        <select class="form-select" id="city" required>
+          <option value="">Selecione uma cidade</option>
+        </select>
       </div>
-      <div class="row mb-3">
-        <label for="password" class="col-sm-2 col-form-label-md">Senha</label required>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="password" placeholder="Digite sua senha">
-        </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="password" placeholder="Digite sua senha" required>
       </div>
-      <div class="row mb-3">
-        <label for="passwordConfirm" class="col-sm-2 col-form-label-md">Confirmar senha</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="passwordConfirm" placeholder="Repita a senha" required>
-          <p class="warning" id="passwordWarn"></p>
-        </div>
+
+      <div class="mb-3">
+        <label for="passwordConfirm" class="form-label">Confirmar senha</label>
+        <input type="password" class="form-control" id="passwordConfirm" placeholder="Repita a senha" required>
+        <p class="warning" id="passwordWarn"></p>
       </div>
-      <p class="sign-in-label">Já tem um usuário? <a href="#" id="loginButton">entre aqui!</a></p>
-      <button type="submit" class="btn btn-primary" id="createUser">Criar</button>
+
+      <div class="mb-3 text-center">
+        <p>Já tem um usuário? <a href="#" id="loginButton">Entre aqui!</a></p>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Criar</button>
+      </div>
     </form>
   </div>
 
@@ -112,7 +112,34 @@
     $(document).ready(function() {
       $('#cellphone').mask('(00) 00000-0000');
       $('#telephone').mask('(00) 0000-0000');
-      $('#birthDate').mask('00/00/0000');
+      $('#birthDate').mask('0000/00/00');
+
+      // Populando o select
+      $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function(data) {
+        data.sort(function(a, b) {
+          return a.nome.localeCompare(b.nome);
+        });
+
+        $.each(data, function(key, estado) {
+          $('#state').append('<option value="' + estado.id + '">' + estado.nome + '</option>');
+        });
+      });
+
+      $('#state').on('change', function() {
+        var estadoId = $(this).val();
+        
+        // Limpa as opções de cidades
+        $('#city').empty().append('<option value="">Selecione uma cidade</option>');
+        
+        if (estadoId) {
+          $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + estadoId + "/municipios", function(data) {
+            // Popula o select de cidades
+            $.each(data, function(key, cidade) {
+              $('#city').append('<option value="' + cidade.id + '">' + cidade.nome + '</option>');
+            });
+          });
+        }
+      });
     })
 
     $('#loginButton').click(() => {
@@ -130,15 +157,16 @@
       var state = $('#state').val();
       var password = $('#password').val();
       var confirmPassword = $('#passwordConfirm').val();
-      var ageIsValid = isAdult(birthDate); 
 
-      if(!ageIsValid){
-        $('#adultWarn').text('Você precisa ter 18 anos!');
+      if((password && confirmPassword).length < 4){
+        $('#passwordWarn').text('A senha precisa ter 4 caracteres!');
         event.preventDefault();
+        return
       };
       if(!(password === confirmPassword)){
         $('#passwordWarn').text('As senhas não coincidem!');
         event.preventDefault();
+        return
       };
 
       var formData = {
@@ -158,35 +186,18 @@
         url: 'http://localhost/teste-webbrain/frontend/pages/signin.html/../../../backend/create_user.php',
         data: formData,
         dataType: 'json',
-        encode: true,
         success: function(response) {
             if (response.success) {
                 alert('Usuário criado com sucesso!');
             } else {
                 alert('Erro: ' + response.message);
             }
-        },
-        error: function(error) {
-            console.log('Erro no AJAX:', error);
         }
       });
-      event.preventDefault();
+
+      alert('Usuário criado com sucesso!');
+      window.location.href = './login.html'
     })
-
-    // Funçao de verificação de maioridade
-    function isAdult(birthDate) {
-    const [day, month, year] = birthDate.split('/');
-    const birth = new Date(year, month - 1, day);
-    const today = new Date();
-    const age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-    const dayDiff = today.getDate() - birth.getDate();
-
-    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-      return age - 1 >= 18;
-    }
-    return age >= 18;
-  }
   </script>
 </body>
 </html>

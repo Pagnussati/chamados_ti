@@ -22,15 +22,15 @@
 
        // Executando
        if ($stmt->execute()) {
-           echo json_encode(['success' => true]);
+           echo json_encode('Usuário criado com sucesso!');
        } else {
-           echo json_encode(['success' => false, 'message' => 'Erro ao criar o usuário']);
+           echo json_encode('Erro ao criar o usuário');
        }
 
        // Fechar o statement
        $stmt->close();
    } else {
-       echo json_encode(['success' => false, 'message' => 'Erro ao preparar a query']);
+       echo json_encode('Erro ao preparar a query');
    };
 
 ?>

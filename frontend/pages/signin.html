@@ -185,7 +185,6 @@
         type: 'POST',
         url: 'http://localhost/teste-webbrain/frontend/pages/signin.html/../../../backend/create_user.php',
         data: formData,
-        dataType: 'json',
         success: function(response) {
             if (response.success) {
                 alert('Usuário criado com sucesso!');
@@ -194,9 +193,7 @@
             }
         }
       });
-
-      alert('Usuário criado com sucesso!');
-      window.location.href = './login.html'
+      window.location.href = '../../login.html'
     })
   </script>
 </body>

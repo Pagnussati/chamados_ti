@@ -65,14 +65,14 @@
       <div class="mb-3">
         <label for="state" class="form-label">Estado</label>
         <select class="form-select" id="state" required>
-          <option value="">Selecione um estado</option>
+          <option value=""></option>
         </select>
       </div>
 
       <div class="mb-3">
         <label for="city" class="form-label">Cidade</label>
         <select class="form-select" id="city" required>
-          <option value="">Selecione uma cidade</option>
+          <option value=""></option>
         </select>
       </div>
 
@@ -129,7 +129,7 @@
         var estadoId = $(this).val();
         
         // Limpa as opções de cidades
-        $('#city').empty().append('<option value="">Selecione uma cidade</option>');
+        $('#city').empty().append('<option value=""></option>');
         
         if (estadoId) {
           $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + estadoId + "/municipios", function(data) {
@@ -148,13 +148,15 @@
 
     // Verificando antes de enviar para o backend
     $('#createUserForm').submit(function() {
+      event.preventDefault();
+
       var name = $('#name').val();
       var birthDate = $('#birthDate').val();
       var email = $('#user').val();
       var telephone = $('#telephone').val();
       var cellphone = $('#cellphone').val();
-      var city = $('#city').val();
-      var state = $('#state').val();
+      var city = $('#city option:selected').text();
+      var state = $('#state option:selected').text();
       var password = $('#password').val();
       var confirmPassword = $('#passwordConfirm').val();
 
@@ -194,7 +196,7 @@
             }
         }
       });
-      window.location.href = '../../login.html'
+      window.location.href = 'login.html'
     })
   </script>
 </body>

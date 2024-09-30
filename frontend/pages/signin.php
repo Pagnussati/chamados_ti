@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,11 @@
   <link rel="stylesheet" href="../styles/signin.css">
   <title>Teste | Web Brain</title>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="../../index.html">Chamados TI</a>
+      <a class="navbar-brand" href="../../index.php">Chamados TI</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -127,10 +129,10 @@
 
       $('#state').on('change', function() {
         var estadoId = $(this).val();
-        
+
         // Limpa as opções de cidades
         $('#city').empty().append('<option value=""></option>');
-        
+
         if (estadoId) {
           $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + estadoId + "/municipios", function(data) {
             // Popula o select de cidades
@@ -143,7 +145,7 @@
     })
 
     $('#loginButton').click(() => {
-      window.location.href = './login.html'
+      window.location.href = './login.php'
     })
 
     // Verificando antes de enviar para o backend
@@ -160,12 +162,12 @@
       var password = $('#password').val();
       var confirmPassword = $('#passwordConfirm').val();
 
-      if((password && confirmPassword).length < 4){
+      if ((password && confirmPassword).length < 4) {
         $('#passwordWarn').text('A senha precisa ter 4 caracteres!');
         event.preventDefault();
         return
       };
-      if(!(password === confirmPassword)){
+      if (!(password === confirmPassword)) {
         $('#passwordWarn').text('As senhas não coincidem!');
         event.preventDefault();
         return
@@ -188,16 +190,17 @@
         url: 'http://localhost/teste-webbrain/backend/create_user.php',
         data: formData,
         success: function(response) {
-            if (response.success) {
-                alert('Usuário criado com sucesso!');
-                window.location.href = 'http://localhost/teste-webbrain/frontend/pages/login.html'
-            } else {
-                alert('Erro: ' + response.message);
-            }
+          if (response.success) {
+            alert('Usuário criado com sucesso!');
+            window.location.href = 'http://localhost/teste-webbrain/frontend/pages/login.php'
+          } else {
+            alert('Erro: ' + response.message);
+          }
         }
       });
-      window.location.href = 'login.html'
+      window.location.href = 'login.php'
     })
   </script>
 </body>
+
 </html>

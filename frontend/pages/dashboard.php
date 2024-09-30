@@ -27,7 +27,7 @@
             <a class="nav-link" href="./new_call.php">Abrir chamado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="#">Gerenciar chamado</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>

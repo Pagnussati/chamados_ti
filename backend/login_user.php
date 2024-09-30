@@ -13,6 +13,7 @@
           if (password_verify($password, $user_data['senha'])) {
               // Create session
               session_start();
+              $_SESSION['user_id'] = $user_data['id'];
               $_SESSION['email'] = $email;
               echo "Login successful!";
           } else {

@@ -28,7 +28,7 @@
             <a class="nav-link" href="">Abrir chamado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="#">Gerenciar chamado</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
@@ -40,7 +40,7 @@
 
   <div class="container mt-5">
         <h1>Abrir Chamado</h1>
-        <form id="newCallForm" method="post" action="save_call.php">
+        <form id="newCallForm">
             <div class="mb-3">
                 <label for="description" class="form-label">Descrição do Problema</label>
                 <textarea id="description" name="description" class="form-control" required></textarea>
@@ -51,18 +51,18 @@
             </div>
             <div class="mb-3">
                 <label for="attachments" class="form-label">Anexos</label>
-                <input type="file" id="attachments" name="attachments[]" class="form-control" multiple required>
+                <input type="file" id="attachments" name="attachments[]" class="form-control" multiple>
             </div>
             <div id="contacts">
                 <h5>Contatos Telefônicos</h5>
                 <div class="contact mb-3">
-                    <input type="text" name="contactName[]" id="contactName" class="form-control mb-2" placeholder="Nome" required>
-                    <input type="text" name="contactPhone[]" id="contactPhone" class="form-control mb-2 phone-mask" placeholder="Telefone" required>
-                    <input type="text" name="contactObservation[]" id="contactObs" class="form-control mb-2" placeholder="Observação" required>
+                    <input type="text" name="contactName[]" id="contactName" class="form-control mb-2" placeholder="Nome">
+                    <input type="text" name="contactPhone[]" id="contactPhone" class="form-control mb-2 phone-mask" placeholder="Telefone">
+                    <input type="text" name="contactObservation[]" id="contactObs" class="form-control mb-2" placeholder="Observação">
                 </div>
             </div>
             <button type="button" id="addContact" class="btn btn-secondary mb-3">Adicionar Contato</button>
-            <button type="submit" class="btn btn-primary mb-3">Registrar Chamado</button>
+            <button type="submit" class="btn btn-primary mb-3" id="createCall">Registrar Chamado</button>
         </form>
     </div>
 
@@ -77,20 +77,76 @@
 
   <script>
     $(document).ready(() => {
+      // Mascaras e summernote
       $("#description").summernote();
-      $(".phone-mask").mask("(00) 00000-0000")
+      $(".phone-mask").mask("(00) 00000-0000");
+
+      // Botao de adicionar contatos
+      $('#addContact').click(() => {
+          const newContact = `
+              <div class="contact mb-3">
+                  <input type="text" name="contactName[]" class="form-control mb-2" placeholder="Nome" required>
+                  <input type="text" name="contactPhone[]" class="form-control mb-2 phone-mask" placeholder="Telefone" required>
+                  <input type="text" name="contactObservation[]" class="form-control mb-2" placeholder="Observação" required>
+                  <button type="button" class="btn btn-danger removeContact">Remover</button>
+              </div>`;
+          $('#contacts').append(newContact);
+          $(".phone-mask").mask("(00) 00000-0000")
+      });
+
+      // Botao de remover contato
+      $('#contacts').on('click', '.removeContact', function() {
+        $(this).closest('.contact').remove(); 
+      });
+
+      // Acao de submit no formulario
+      $('#newCallForm').submit((e) => {
+        e.preventDefault();
+  
+        var formData = new FormData();
+        
+        // Adiciona os dados do formulário
+        formData.append('description', $('#description').val());
+        formData.append('incidentType', $('#incidentType').val());
+  
+        // Adiciona os anexos ao FormData
+        const files = $('#attachments')[0].files; 
+        for (let i = 0; i < files.length; i++) {
+            formData.append('attachments[]', files[i]); 
+        }
+  
+        // Adiciona contatos ao FormData
+        $('#contacts .contact').each(function() {
+            const contactName = $(this).find('input[name="contactName[]"]').val();
+            const contactPhone = $(this).find('input[name="contactPhone[]"]').val();
+            const contactObservation = $(this).find('input[name="contactObservation[]"]').val();
+  
+            formData.append('contactName[]', contactName);
+            formData.append('contactPhone[]', contactPhone);
+            formData.append('contactObservation[]', contactObservation);
+        });
+
+        // formData.forEach((value, key) => {
+        //   console.log(`${key}: ${value}`);
+        // });
+  
+        $.ajax({
+          type : 'POST',
+          url: 'http://localhost/teste-webbrain/backend/create_call.php',
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            alert(response);
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            alert('Erro ao enviar o chamado: ' + textStatus);
+          }
+        });    
     });
 
-    // Botao de adicionar contatos
-    $('#addContact').click(() => {
-        const newContact = `
-            <div class="contact mb-3">
-                <input type="text" name="contactName[]" class="form-control mb-2" placeholder="Nome" required>
-                <input type="text" name="contactPhone[]" class="form-control mb-2 phone-mask" placeholder="Telefone" required>
-                <input type="text" name="contactObservation[]" class="form-control mb-2" placeholder="Observação" required>
-            </div>`;
-        $('#contacts').append(newContact);
-        $(".phone-mask").mask("(00) 00000-0000")
+
+
     });
   </script>
 </body>

@@ -1,9 +1,8 @@
 <?php
-  include('database/db.php');
+include('database/db.php');
 
-  session_start();
-  session_destroy();
+session_start();
+session_destroy();
 
-  header('Location: http://localhost/teste-webbrain/frontend/pages/login.html');
-  exit;
-?>
+header('Location: http://localhost/teste-webbrain/frontend/pages/login.html');
+exit;

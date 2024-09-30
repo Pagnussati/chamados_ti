@@ -1,12 +1,12 @@
 <?php
-   include('database/db.php');
-   session_start();
+include('database/db.php');
+session_start();
 
-   // Atribuir os dados enviados pelo formulário
-   $userId = $_SESSION['user_id'];
-   $description = $_POST['description'];
-   $incidentType = $_POST['incidentType'];
-   $openingDate = date('Y-m-d H:i:s');
+// Atribuir os dados enviados pelo formulário
+$userId = $_SESSION['user_id'];
+$description = $_POST['description'];
+$incidentType = $_POST['incidentType'];
+$openingDate = date('Y-m-d H:i:s');
 
 //    $response = [
 //     'userId' => $userId,
@@ -17,29 +17,42 @@
 
 //    echo json_encode($response);
 
-   //Preparando a declaração SQL
-   $sql = "INSERT INTO chamados (usuario_id, descricao_problema, tipo_incidente, data_abertura)
+//Preparando a declaração SQL
+$sql = "INSERT INTO chamados (usuario_id, descricao_problema, tipo_incidente, data_abertura)
            VALUES (?, ?, ?, ?)";
 
-   // Preparando a execução da query
-   if ($stmt = $conn->prepare($sql)) {
-       // Bindando os parâmetros
-       $stmt->bind_param("isss", $userId, $description, $incidentType, $openingDate);
+// Preparando a execução da query
+if ($stmt = $conn->prepare($sql)) {
+    // Bindando os parâmetros
+    $stmt->bind_param("isss", $userId, $description, $incidentType, $openingDate);
 
-       // Executando
-       if ($stmt->execute()) {
+    // Executando
+    if ($stmt->execute()) {
         $response = 'Chamado criado com sucesso!';
         echo json_encode($response);
-       } else {
+    } else {
         $response = 'Erro ao criar chamado.';
         echo json_encode($response);
-       }
+    }
 
-       // Fechar o statement
-       $stmt->close();
-   } else {
+    // Fechar o statement
+    $stmt->close();
+} else {
     $response = 'Erro ao preparar a query';
     echo json_encode($response);
-   };
+};
 
-?>
+$chamadoId = $stmt->insert_id;
+
+foreach ($_FILES['attachments']['tmp_name'] as $index => $tmpName) {
+    $fileContent = file_get_contents($tmpName);
+    $base64 = base64_encode($fileContent);
+
+    $stmt = $conn->prepare("INSERT INTO anexos (chamado_id, arquivo_base64) VALUES (?, ?)");
+    $stmt->bind_param("is", $chamadoId, $base64);
+
+    if (!$stmt->execute()) {
+        echo "Erro ao inserir anexo: " . $stmt->error; // Mostrar o erro
+        exit;
+    }
+}

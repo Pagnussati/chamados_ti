@@ -1,9 +1,10 @@
 <?php
-  include('../../backend/session_check.php')
+include('../../backend/session_check.php')
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
   <link rel="stylesheet" href="../styles/index.css">
   <title>Teste | Web Brain</title>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container-fluid">
@@ -46,4 +48,5 @@
     })
   </script>
 </body>
+
 </html>

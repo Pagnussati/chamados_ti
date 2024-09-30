@@ -53,14 +53,14 @@ include('../../backend/session_check.php')
       </div>
       <div class="mb-3">
         <label for="attachments" class="form-label">Anexos</label>
-        <input type="file" id="attachments" name="attachments[]" class="form-control" multiple>
+        <input type="file" id="attachments" name="attachments[]" class="form-control" multiple required>
       </div>
       <div id="contacts">
         <h5>Contatos Telefônicos</h5>
         <div class="contact mb-3">
-          <input type="text" name="contactName[]" id="contactName" class="form-control mb-2" placeholder="Nome">
-          <input type="text" name="contactPhone[]" id="contactPhone" class="form-control mb-2 phone-mask" placeholder="Telefone">
-          <input type="text" name="contactObservation[]" id="contactObs" class="form-control mb-2" placeholder="Observação">
+          <input type="text" name="contactName[]" id="contactName" class="form-control mb-2" placeholder="Nome" required>
+          <input type="text" name="contactPhone[]" id="contactPhone" class="form-control mb-2 phone-mask" placeholder="Telefone" required>
+          <input type="text" name="contactObservation[]" id="contactObs" class="form-control mb-2" placeholder="Observação" required>
         </div>
       </div>
       <button type="button" id="addContact" class="btn btn-secondary mb-3">Adicionar Contato</button>
@@ -103,8 +103,6 @@ include('../../backend/session_check.php')
 
       // Acao de submit no formulario
       $('#newCallForm').submit((e) => {
-        e.preventDefault();
-
         var formData = new FormData();
 
         // Adiciona os dados do formulário
@@ -140,15 +138,13 @@ include('../../backend/session_check.php')
           processData: false,
           success: function(response) {
             alert(response);
+            location.reload();
           },
           error: function(jqXHR, textStatus, errorThrown) {
             alert('Erro ao enviar o chamado: ' + textStatus);
           }
         });
       });
-
-
-
     });
   </script>
 </body>

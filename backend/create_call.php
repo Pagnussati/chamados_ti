@@ -34,9 +34,6 @@ if ($stmt = $conn->prepare($sql)) {
         $response = 'Erro ao criar chamado.';
         echo json_encode($response);
     }
-
-    // Fechar o statement
-    $stmt->close();
 } else {
     $response = 'Erro ao preparar a query';
     echo json_encode($response);
@@ -44,6 +41,7 @@ if ($stmt = $conn->prepare($sql)) {
 
 $chamadoId = $stmt->insert_id;
 
+// Inserindo anexos Base64
 foreach ($_FILES['attachments']['tmp_name'] as $index => $tmpName) {
     $fileContent = file_get_contents($tmpName);
     $base64 = base64_encode($fileContent);
@@ -52,7 +50,23 @@ foreach ($_FILES['attachments']['tmp_name'] as $index => $tmpName) {
     $stmt->bind_param("is", $chamadoId, $base64);
 
     if (!$stmt->execute()) {
-        echo "Erro ao inserir anexo: " . $stmt->error; // Mostrar o erro
+        $response = "Erro ao inserir anexo: " . $stmt->error;
+        echo $response;
+        exit;
+    }
+}
+
+// Inserindo contatos telefonicos
+foreach ($_POST['contactName'] as $index => $nome) {
+    $telephone = $_POST['contactPhone'][$index];
+    $observation = $_POST['contactObservation'][$index];
+
+    $stmt = $conn->prepare("INSERT INTO contatos_telefonicos (chamado_id, nome, telefone, observacao) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("isss", $chamadoId, $nome, $telephone, $observation);
+
+    if (!$stmt->execute()) {
+        $response = "Erro ao inserir contato: " . $stmt->error;
+        echo  $response;
         exit;
     }
 }

@@ -1,5 +1,5 @@
 <?php
-include('../../backend/session_check.php')
+include('../../backend/session/session_check.php')
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +44,7 @@ include('../../backend/session_check.php')
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script>
     $('#exitButton').click(() => {
-      window.location.href = '../../backend/session_destroy.php'
+      window.location.href = '../../backend/session/session_destroy.php'
     })
   </script>
 </body>

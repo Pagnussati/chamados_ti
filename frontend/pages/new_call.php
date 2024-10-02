@@ -1,5 +1,5 @@
 <?php
-include('../../backend/session_check.php')
+include('../../backend/session/session_check.php')
 ?>
 
 <!DOCTYPE html>

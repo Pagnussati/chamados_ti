@@ -52,7 +52,7 @@ include('../../backend/session_check.php')
           </tr>
         </thead>
         <tbody id="chamados-list">
-          <!-- Os chamados serão carregados aqui via AJAX -->
+          <!-- Dados dos chamados -->
         </tbody>
       </table>
     </div>
@@ -69,9 +69,10 @@ include('../../backend/session_check.php')
           </button>
         </div>
         <div class="modal-body" id="modal-body-content">
-          <!-- Detalhes do chamado serão carregados aqui -->
+          <!-- Detalhes do chamado -->
         </div>
         <div class="modal-footer">
+          <a href="./edit_call_page.php"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Editar chamado</button></a>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
         </div>
       </div>
@@ -81,45 +82,42 @@ include('../../backend/session_check.php')
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script>
-    $(document).ready(function() {
-      // Carregar os chamados via AJAX
-      function carregarChamados() {
-        $.ajax({
-          url: '../../backend/list_call.php',
-          type: 'GET',
-          dataType: 'json',
-          success: function(data) {
-            if (data.error) {
-              alert(data.error);
-              return;
-            }
+    $(document).ready(() => {
+      $.ajax({
+        url: '../../backend/list_call.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          if (data.error) {
+            alert(data.error);
+            return;
+          }
 
-            let html = '';
-            $.each(data, function(index, chamado) {
-              html += `
+          let html = '';
+          $.each(data, function(index, chamado) {
+            html += `
                 <tr>
                   <td>${chamado.id}</td>
                   <td>${chamado.tipo_incidente}</td>
                   <td>${new Date(chamado.data_abertura).toLocaleString('pt-BR')}</td>
                   <td>
-                    <button class="btn btn-primary btn-sm visualizar-chamado" data-id="${chamado.id}">
+                    <button class="btn btn-primary btn-sm view-call" data-id="${chamado.id}">
                       Visualizar
                     </button>
                   </td>
                 </tr>
               `;
-            });
+          });
 
-            $('#chamados-list').html(html);
-          },
-          error: function() {
-            alert('Erro ao carregar os chamados.');
-          }
-        });
-      }
+          $('#chamados-list').html(html);
+        },
+        error: function() {
+          alert('Erro ao carregar os chamados.');
+        }
+      });
 
-      // Carregar detalhes do chamado no modal
-      $(document).on('click', '.visualizar-chamado', function() {
+      // Carregando modal
+      $(document).on('click', '.view-call', function() {
         const chamadoId = $(this).data('id');
 
         $.ajax({
@@ -136,26 +134,27 @@ include('../../backend/session_check.php')
             }
 
             let modalContent = `
-        <p><strong>Tipo de incidente:</strong> ${chamado.tipo_incidente}</p>
-        <p><strong>Descrição:</strong> ${chamado.descricao_problema}</p>
-        <p><strong>Data de Abertura:</strong> ${chamado.data_abertura}</p>
-        <hr>
-        <h5>Histórico</h5>
-        <ul>
-          ${Array.isArray(chamado.historico) && chamado.historico.length > 0 
-              ? chamado.historico.map(hist => `<li>${new Date(hist.data_registro).toLocaleString()} - ${hist.descricao}</li>`).join('') 
-              : 'Nenhum histórico disponível'}
-        </ul>
-        <hr>
-        <h5>Anexos</h5>
-        <ul>
-          ${Array.isArray(chamado.anexos) && chamado.anexos.length > 0 
-              ? chamado.anexos.map((anexo, index) => `<li><a href="data:image/jpeg;base64,${anexo.arquivo_base64}" download="anexo_${index + 1}.jpg" target="_blank">Anexo ${index + 1}</li>`).join('') 
-              : 'Nenhum anexo disponível'}
-        </ul>
-      `;
+              <p><strong>Tipo de incidente:</strong> ${chamado.tipo_incidente}</p>
+              <p><strong>Descrição:</strong> ${chamado.descricao_problema}</p>
+              <p><strong>Data de Abertura:</strong> ${chamado.data_abertura}</p>
+              <hr>
+              <h5>Histórico</h5>
+              <ul>
+                ${Array.isArray(chamado.historico) && chamado.historico.length > 0 
+                    ? chamado.historico.map(hist => `<li>${new Date(hist.data_registro).toLocaleString()} - ${hist.descricao}</li>`).join('') 
+                    : 'Nenhum histórico disponível'}
+              </ul>
+              <hr>
+              <h5>Anexos</h5>
+              <ul>
+                ${Array.isArray(chamado.anexos) && chamado.anexos.length > 0 
+                    ? chamado.anexos.map((anexo, index) => `<li><a href="data:image/jpeg;base64,${anexo.arquivo_base64}" download="anexo_${index + 1}.jpg" target="_blank">Anexo ${index + 1}</li>`).join('') 
+                    : 'Nenhum anexo disponível'}
+              </ul>
+            `;
 
             $('#modal-body-content').html(modalContent);
+            $('#modalChamado .modal-footer a').attr('href', `./edit_call_page.php?id=${chamadoId}`);
             $('#modalChamado').modal('show');
           },
           error: function() {
@@ -163,9 +162,6 @@ include('../../backend/session_check.php')
           }
         });
       });
-
-      // Inicializa a função ao carregar a página
-      carregarChamados();
     });
   </script>
 </body>

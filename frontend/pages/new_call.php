@@ -136,11 +136,11 @@ include('../../backend/session_check.php')
           data: formData,
           contentType: false,
           processData: false,
-          success: function(response) {
+          success: (response) => {
             alert(response);
             location.reload();
           },
-          error: function(jqXHR, textStatus, errorThrown) {
+          error: (jqXHR, textStatus, errorThrown) => {
             alert('Erro ao enviar o chamado: ' + textStatus);
           }
         });

@@ -13,9 +13,6 @@
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container-fluid">
       <a class="navbar-brand" href="../../index.html">Chamados TI</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <!-- <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -90,7 +87,7 @@
       </div>
 
       <div class="mb-3 text-center">
-        <p>Já tem um usuário? <a href="#" id="loginButton">Entre aqui!</a></p>
+        <p>Já tem um usuário? <a href="./login.php" id="loginButton">Entre aqui!</a></p>
       </div>
 
       <div class="text-center">
@@ -142,11 +139,7 @@
           });
         }
       });
-    })
-
-    $('#loginButton').click(() => {
-      window.location.href = './login.php'
-    })
+    });
 
     // Verificando antes de enviar para o backend
     $('#createUserForm').submit(function() {
@@ -192,13 +185,12 @@
         success: function(response) {
           if (response.success) {
             alert('Usuário criado com sucesso!');
-            window.location.href = 'http://localhost/teste-webbrain/frontend/pages/login.php'
+            location.href = './login.php'
           } else {
             alert('Erro: ' + response.message);
           }
         }
       });
-      window.location.href = 'login.php'
     })
   </script>
 </body>

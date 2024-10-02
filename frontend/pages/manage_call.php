@@ -16,7 +16,7 @@ include('../../backend/session/session_check.php')
 <body>
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Chamados TI</a>
+      <a class="navbar-brand" href="./dashboard.php">Chamados TI</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -29,10 +29,10 @@ include('../../backend/session/session_check.php')
             <a class="nav-link" href="./new_call.php">Abrir chamado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Gerenciar chamado</a>
+            <a class="nav-link" href="./manage_call.php">Gerenciar chamados</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="../../backend/session/session_destroy.php">Sair da conta</a>
           </li>
         </ul>
       </div>
@@ -42,7 +42,7 @@ include('../../backend/session/session_check.php')
   <div class="container mt-5">
     <h2 class="mb-4">Meus Chamados</h2>
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table table-bordered table-striped">
         <thead class="thead-dark">
           <tr>
             <th>ID Chamado</th>
@@ -79,10 +79,13 @@ include('../../backend/session/session_check.php')
     </div>
   </div>
 
+  <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- Jquery -->
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script>
     $(document).ready(() => {
+      // Buscando os dados no banco
       $.ajax({
         url: '../../backend/list_call.php',
         type: 'GET',
@@ -93,6 +96,7 @@ include('../../backend/session/session_check.php')
             return;
           }
 
+          // Inserindo na tabela HTML
           let html = '';
           $.each(data, function(index, chamado) {
             html += `
@@ -101,7 +105,7 @@ include('../../backend/session/session_check.php')
                   <td>${chamado.tipo_incidente}</td>
                   <td>${new Date(chamado.data_abertura).toLocaleString('pt-BR')}</td>
                   <td>
-                    <button class="btn btn-primary btn-sm view-call" data-id="${chamado.id}">
+                    <button class="btn btn-secondary btn-sm view-call" data-id="${chamado.id}">
                       Visualizar
                     </button>
                   </td>
@@ -133,6 +137,7 @@ include('../../backend/session/session_check.php')
               return;
             }
 
+            // HTML do modal
             let modalContent = `
               <p><strong>Tipo de incidente:</strong> ${chamado.tipo_incidente}</p>
               <p><strong>Descrição:</strong> ${chamado.descricao_problema}</p>

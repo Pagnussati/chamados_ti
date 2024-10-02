@@ -13,9 +13,6 @@
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container-fluid">
       <a class="navbar-brand" href="../../index.html">Chamados TI</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <!-- <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -49,7 +46,7 @@
           <input type="password" class="form-control" id="password">
         </div>
       </div>
-      <p class="sign-in-label">Não tem um usuário? <a href="#" id="signinButton">crie um usuário aqui!</a></p>
+      <p class="sign-in-label">Não tem um usuário? <a href="./signin.php" id="signinButton">crie um usuário aqui!</a></p>
       <button type="submit" class="btn btn-primary" id="loginButton">Entrar</button>
     </form>
   </div>
@@ -73,9 +70,7 @@
           },
           success: function(response) {
             if (response === "Login successful!") {
-              // Redirect to dashboard or any other page
               window.location.href = 'dashboard.php';
-              event.preventDefault();
             } else {
               alert(response);
             }
@@ -83,10 +78,6 @@
         });
       });
     });
-
-    $('#signinButton').click(() => {
-      window.location.href = 'signin.html'
-    })
   </script>
 </body>
 

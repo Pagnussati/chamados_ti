@@ -18,7 +18,7 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 <body>
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Chamados TI</a>
+      <a class="navbar-brand" href="./dashboard.php">Chamados TI</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -31,10 +31,10 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
             <a class="nav-link" href="./new_call.php">Abrir chamado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./manage_call.php">Gerenciar chamado</a>
+            <a class="nav-link" href="./manage_call.php">Gerenciar chamados</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="../../backend/session/session_destroy.php">Sair da conta</a>
           </li>
         </ul>
       </div>
@@ -47,7 +47,7 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
       <input type="hidden" id="callId" name="callId" value="<?php echo $callId; ?>">
       <div class="mb-3">
         <label for="description" class="form-label">Descrição da alteração</label>
-        <input type="text" id="description" name="description" class="form-control"></input>
+        <input type="text" id="description" name="description" class="form-control" required></input>
       </div>
       <div class="mb-3">
         <label for="attachments" class="form-label">Anexos</label>
@@ -61,10 +61,6 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <!-- Jquery -->
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-  <!-- Jquery mask para mascaras -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-  <!-- Summernote -->
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
   <script>
     $(document).ready(() => {
@@ -82,6 +78,7 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
           formData.append('attachments[]', files[i]);
         };
 
+        // Inserindo os novos anexos e a descricao
         $.ajax({
           url: '../../backend/edit_call.php',
           data: formData,

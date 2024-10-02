@@ -10,11 +10,8 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Chamados TI</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <button type="button" class="btn btn-secondary" id="loginButton">Login</button>
+      <a class="navbar-brand" href="">Chamados TI</a>
+      <a href="./frontend/pages/login.php"><button type="button" class="btn btn-secondary" id="loginButton">Login</button></a>
       <!-- <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -34,16 +31,35 @@
     </div>
   </nav>
   
-  <div class="main-div">
-    <h1>Bem vindos ao Chamados TI!</h1>
+  <div class="main-div container mt-5">
+    <h1 class="text-center mb-4">Bem-vindos ao Chamados TI!</h1>
+    
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            <h4>Informações Gerais do Sistema</h4>
+        </div>
+        <div class="card-body">
+            <p>
+                O sistema de chamados TI foi desenvolvido para facilitar a gestão de incidentes e problemas relacionados à tecnologia da informação. Aqui estão algumas das funcionalidades principais:
+            </p>
+            <ul>
+                <li><strong>Cadastro e Login:</strong> Usuários podem se cadastrar e fazer login com segurança.</li>
+                <li><strong>Abertura de Chamados:</strong> Registre novos chamados com descrição detalhada, anexos e contatos telefônicos.</li>
+                <li><strong>Pós-Abertura:</strong> Adicione anexos e visualize o histórico do chamado após a abertura.</li>
+                <li><strong>Listagem de Chamados:</strong> Visualize todos os chamados abertos pelo usuário logado, incluindo histórico e anexos adicionais.</li>
+                <li><strong>Segurança:</strong> Protegemos contra SQL Injection, XSS e outras vulnerabilidades, garantindo a segurança dos dados dos usuários.</li>
+                <li><strong>Responsividade:</strong> Este site é inteiramente responsivo, sendo muito fácil de utlizar por dispositivos celulares também!</li>
+            </ul>
+            <p>
+                Nosso objetivo é oferecer uma plataforma fácil de usar, eficiente e segura para que você possa gerenciar seus chamados de TI de maneira ágil, além de agilizar muitoo fluxo de trabalho do setor de TI. Crie sua conta e faça sua chamada!
+            </p>
+        </div>
+        <div class="card-footer text-muted">
+          Site desenvolvido com muito ☕ por <strong>João Gabriel Pagnussati</strong>
+      </div>
+      </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-  <script>
-    $('#loginButton').click(() => {
-      window.location.href = './frontend/pages/login.php'
-    })
-  </script>
 </body>
 </html>

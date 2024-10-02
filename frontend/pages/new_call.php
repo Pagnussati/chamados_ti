@@ -9,7 +9,7 @@ include('../../backend/session/session_check.php')
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../styles/index.css">
   <title>Teste | Web Brain</title>
 </head>
@@ -17,7 +17,7 @@ include('../../backend/session/session_check.php')
 <body>
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Chamados TI</a>
+      <a class="navbar-brand" href="./dashboard.php">Chamados TI</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -27,13 +27,13 @@ include('../../backend/session/session_check.php')
             <a class="nav-link active" aria-current="page" href="./dashboard.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Abrir chamado</a>
+            <a class="nav-link" href="./new_call.php">Abrir chamado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Gerenciar chamado</a>
+            <a class="nav-link" href="./manage_call.php">Gerenciar chamados</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="../../backend/session/session_destroy.php">Sair da conta</a>
           </li>
         </ul>
       </div>
@@ -52,7 +52,7 @@ include('../../backend/session/session_check.php')
         <input type="text" id="incidentType" name="incidentType" class="form-control" required>
       </div>
       <div class="mb-3">
-        <label for="attachments" class="form-label">Anexos</label>
+        <label for="attachments" class="form-label">Anexos (formato .jpeg)</label>
         <input type="file" id="attachments" name="attachments[]" class="form-control" multiple required>
       </div>
       <div id="contacts">
@@ -75,12 +75,11 @@ include('../../backend/session/session_check.php')
   <!-- Jquery mask para mascaras -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
   <!-- Summernote -->
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
   <script>
     $(document).ready(() => {
       // Mascaras e summernote
-      $("#description").summernote();
+      $('#description').summernote();
       $(".phone-mask").mask("(00) 00000-0000");
 
       // Botao de adicionar contatos
@@ -138,8 +137,10 @@ include('../../backend/session/session_check.php')
           contentType: false,
           processData: false,
           success: (response) => {
-            console.log(response);
-            //location.reload();
+            if (response === 'Chamado criado com sucesso!') {
+              alert('Chamado criado com sucesso!');
+              location.reload();
+            };
           },
           error: (jqXHR, textStatus, errorThrown) => {
             alert('Erro ao enviar o chamado: ' + textStatus);

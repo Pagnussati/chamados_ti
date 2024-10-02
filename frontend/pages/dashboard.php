@@ -29,7 +29,7 @@ include('../../backend/session_check.php')
             <a class="nav-link" href="./new_call.php">Abrir chamado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Gerenciar chamado</a>
+            <a class="nav-link" href="./manage_call.php">Gerenciar chamado</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>

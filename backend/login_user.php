@@ -14,6 +14,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             // Create session
             session_start();
             $_SESSION['user_id'] = $user_data['id'];
+            $_SESSION['name'] = $user_data['nome'];
             $_SESSION['email'] = $email;
             echo "Login successful!";
         } else {

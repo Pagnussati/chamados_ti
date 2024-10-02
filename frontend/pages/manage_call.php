@@ -141,7 +141,7 @@ include('../../backend/session_check.php')
               <h5>Histórico</h5>
               <ul>
                 ${Array.isArray(chamado.historico) && chamado.historico.length > 0 
-                    ? chamado.historico.map(hist => `<li>${new Date(hist.data_registro).toLocaleString()} - ${hist.descricao}</li>`).join('') 
+                    ? chamado.historico.map(hist => `<li>${hist.nome_usuario} : ${new Date(hist.data_evento).toLocaleString("pt-BR")} - ${hist.descricao}</li>`).join('') 
                     : 'Nenhum histórico disponível'}
               </ul>
               <hr>

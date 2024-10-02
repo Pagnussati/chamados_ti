@@ -4,17 +4,19 @@ session_start();
 
 // Atribuir os dados enviados pelo formulário
 $callId = isset($_POST['callId']) ? intval($_POST['callId']) : 0;
+$userName = $_SESSION['name'];
 $description = $_POST['description'];
+date_default_timezone_set('America/Sao_Paulo');
 $eventDate = date('Y-m-d H:i:s');
 
 //Preparando a declaração SQL
-$sql = "INSERT INTO historico_chamados (chamado_id, descricao, data_evento)
-           VALUES (?, ?, ?)";
+$sql = "INSERT INTO historico_chamados (chamado_id, nome_usuario, descricao, data_evento)
+           VALUES (?, ?, ?, ?)";
 
 // Preparando a execução da query
 if ($stmt = $conn->prepare($sql)) {
   // Bindando os parâmetros
-  $stmt->bind_param("iss", $callId, $description, $eventDate);
+  $stmt->bind_param("isss", $callId, $userName, $description, $eventDate);
 
   // Executando
   if ($stmt->execute()) {

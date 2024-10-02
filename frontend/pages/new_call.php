@@ -103,6 +103,7 @@ include('../../backend/session_check.php')
 
       // Acao de submit no formulario
       $('#newCallForm').submit((e) => {
+        e.preventDefault();
         var formData = new FormData();
 
         // Adiciona os dados do formulário
@@ -137,8 +138,8 @@ include('../../backend/session_check.php')
           contentType: false,
           processData: false,
           success: (response) => {
-            alert(response);
-            location.reload();
+            console.log(response);
+            //location.reload();
           },
           error: (jqXHR, textStatus, errorThrown) => {
             alert('Erro ao enviar o chamado: ' + textStatus);

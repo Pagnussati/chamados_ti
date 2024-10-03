@@ -158,7 +158,7 @@
 
       // Verificando idade
       var parts = birthDate.split('/');
-      var birthDateFormatted = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      var birthDateFormatted = `${parts[2]}-${parts[1]}-${parts[0]}`; // Data no formato do SQL para salvar no banco
       var birthDateObj = new Date(parts[2], parts[1] - 1, parts[0]); // ano, mês, dia
 
       var today = new Date();

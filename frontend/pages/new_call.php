@@ -127,21 +127,20 @@ include('../../backend/session/session_check.php')
           formData.append('contactObservation[]', contactObservation);
         });
 
-        // formData.forEach((value, key) => {
-        //   console.log(`${key}: ${value}`);
-        // });
-
+        // Passando para o ajax os dados e inserindo no banco
         $.ajax({
           type: 'POST',
-          url: 'http://localhost/teste-webbrain/backend/create_call.php',
           data: formData,
+          url: '../../backend/create_call.php',
           contentType: false,
           processData: false,
           success: (response) => {
-            if (response === 'Chamado criado com sucesso!') {
-              alert('Chamado criado com sucesso!');
+            // convertendo o resposta JSON em string
+            let jsonResponse = typeof response === "string" ? JSON.parse(response) : response;
+            if (jsonResponse.message === 'Chamado criado com sucesso!') {
+              alert(jsonResponse.message);
               location.reload();
-            };
+            }
           },
           error: (jqXHR, textStatus, errorThrown) => {
             alert('Erro ao enviar o chamado: ' + textStatus);

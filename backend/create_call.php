@@ -20,13 +20,13 @@ if ($stmt = $conn->prepare($sql)) {
 
     // Executando
     if ($stmt->execute()) {
-        $response = 'Chamado criado com sucesso!';
+        $response = ['message' => 'Chamado criado com sucesso!'];
         echo json_encode($response);
 
         // Recuperando o ID do chamado inserido
         $chamadoId = $stmt->insert_id;
 
-        // Inserindo no histórico
+        // Inserindo no histórico toda vez que o chamado for aberto
         $historicoSql = "INSERT INTO historico_chamados (chamado_id, nome_usuario, descricao, data_evento) VALUES (?, ?, ?, ?)";
         $descriptionHist = "Abertura do chamado";
 
@@ -74,7 +74,7 @@ if ($stmt = $conn->prepare($sql)) {
             }
         }
     } else {
-        $response = 'Erro ao criar chamado.';
+        $response = ['message' => 'Erro ao criar chamado.'];
         echo json_encode($response);
     }
 } else {

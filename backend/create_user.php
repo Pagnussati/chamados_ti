@@ -22,13 +22,16 @@ if ($stmt = $conn->prepare($sql)) {
 
     // Executando
     if ($stmt->execute()) {
-        echo json_encode('Usuário criado com sucesso!');
+        $response = ['message' => 'Usuário criado com sucesso!'];
+        echo json_encode($response);
     } else {
-        echo json_encode('Erro ao criar o usuário');
+        $response = ['message' => 'Erro ao criar usuário'];
+        echo json_encode($response);
     }
 
     // Fechar o statement
     $stmt->close();
 } else {
-    echo json_encode('Erro ao preparar a query');
+    $response = ['message' => 'Erro no banco de dados'];
+    echo json_encode($response);
 };

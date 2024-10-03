@@ -20,18 +20,18 @@ if ($stmt = $conn->prepare($sql)) {
 
   // Executando
   if ($stmt->execute()) {
-    $response = 'Chamado alterado com sucesso!';
+    $response = ['message' => 'Chamado alterado com sucesso!'];
     echo json_encode($response);
   } else {
-    $response = 'Erro ao alterar chamado.';
+    $response = ['message' => 'Erro ao alterar chamado'];
     echo json_encode($response);
   }
 } else {
-  $response = 'Erro ao preparar a query';
+  $response = ['message' => 'Erro ao preparar a query'];
   echo json_encode($response);
 };
 
-// Inserindo anexos Base64
+// Laco para inserir cada anexo e converter para Base64
 foreach ($_FILES['attachments']['tmp_name'] as $index => $tmpName) {
   $fileContent = file_get_contents($tmpName);
   $base64 = base64_encode($fileContent);

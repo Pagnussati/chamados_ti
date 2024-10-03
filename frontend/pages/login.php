@@ -52,11 +52,13 @@
     </form>
   </div>
 
+  <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- Jquery -->
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script>
-    $(document).ready(function() {
-      $('#login-form').submit(function(event) {
+    $(document).ready(() => {
+      $('#login-form').submit((event) => {
         event.preventDefault();
 
         var email = $('#email').val();
@@ -64,19 +66,20 @@
 
         $.ajax({
           type: 'POST',
-          url: 'http://localhost/teste-webbrain/backend/login_user.php',
+          url: '../../backend/login_user.php',
           data: {
             email: email,
             password: password
           },
-          success: function(response) {
+          success: (response) => {
             if (response === "Login successful!") {
               window.location.href = 'dashboard.php';
             } else {
               alert(response);
-            }
+            };
           }
         });
+
       });
     });
   </script>

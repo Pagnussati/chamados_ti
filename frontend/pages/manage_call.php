@@ -99,7 +99,7 @@ include('../../backend/session/session_check.php')
 
           // Inserindo na tabela HTML
           let html = '';
-          $.each(data, function(index, chamado) {
+          $.each(data, (index, chamado) => {
             html += `
                 <tr>
                   <td>${chamado.id}</td>
@@ -122,7 +122,7 @@ include('../../backend/session/session_check.php')
       });
 
       // Carregando modal
-      $(document).on('click', '.view-call', function() {
+      $(document).on('click', '.view-call', () => {
         const chamadoId = $(this).data('id');
 
         $.ajax({
@@ -132,7 +132,7 @@ include('../../backend/session/session_check.php')
             id: chamadoId
           },
           dataType: 'json',
-          success: function(chamado) {
+          success: (chamado) => {
             if (!chamado || chamado.error) {
               alert('Erro ao carregar os detalhes do chamado.');
               return;
@@ -163,7 +163,7 @@ include('../../backend/session/session_check.php')
             $('#modalChamado .modal-footer a').attr('href', `./edit_call_page.php?id=${chamadoId}`);
             $('#modalChamado').modal('show');
           },
-          error: function() {
+          error: () => {
             alert('Erro ao carregar os detalhes do chamado.');
           }
         });

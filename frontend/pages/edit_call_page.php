@@ -52,7 +52,7 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
       </div>
       <div class="mb-3">
         <label for="attachments" class="form-label">Anexos</label>
-        <input type="file" id="attachments" name="attachments[]" class="form-control" multiple required>
+        <input type="file" id="attachments" name="attachments[]" class="form-control" multiple>
       </div>
       <button type="submit" class="btn btn-primary mb-3" id="createCall">Editar Chamado</button>
     </form>
@@ -69,11 +69,11 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
         e.preventDefault();
         var formData = new FormData();
 
-        // Descricao da alteracao e o id do chamado no formData
+        // Inserindo descricao da alteracao e o id do chamado no formData
         formData.append('callId', $('#callId').val());
         formData.append('description', $('#description').val());
 
-        // Adicionando os anexos ao formData
+        // Inserindo os anexos ao formData
         const files = $('#attachments')[0].files;
         for (let i = 0; i < files.length; i++) {
           formData.append('attachments[]', files[i]);
@@ -84,11 +84,14 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
           url: '../../backend/edit_call.php',
           data: formData,
           type: 'POST',
-          processData: false,
           contentType: false,
+          processData: false, // Para nao processar os anexos
           success: (response) => {
-            alert(response);
-            location.href = 'http://localhost/teste-webbrain/frontend/pages/manage_call.php';
+            let jsonResponse = typeof response === "string" ? JSON.parse(response) : response;
+            if (jsonResponse.message === 'Chamado alterado com sucesso!') {
+              alert(jsonResponse.message);
+              location.href = './manage_call.php';
+            }
           },
           error: (jqXHR, textStatus, errorThrown) => {
             console.log('Erro ao enviar o chamado: ' + textStatus);

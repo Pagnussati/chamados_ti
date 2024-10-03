@@ -42,7 +42,7 @@
 
       <div class="mb-3">
         <label for="birthDate" class="form-label">Data de Nascimento</label>
-        <input type="text" class="form-control" id="birthDate" placeholder="aaaa/mm/dd" required>
+        <input type="text" class="form-control" id="birthDate" placeholder="dd/mm/aaaa" required>
         <p class="warning" id="adultWarn"></p>
       </div>
 
@@ -109,10 +109,10 @@
   <!-- Scripts da página -->
   <script>
     // Criacao das mascaras
-    $(document).ready(function() {
+    $(document).ready(() => {
       $('#cellphone').mask('(00) 00000-0000');
       $('#telephone').mask('(00) 0000-0000');
-      $('#birthDate').mask('0000/00/00');
+      $('#birthDate').mask('00/00/0000');
 
       // Populando o select
       $.getJSON("https://servicodados.ibge.gov.br/api/v1/localidades/estados", function(data) {
@@ -143,8 +143,8 @@
     });
 
     // Verificando antes de enviar para o backend
-    $('#createUserForm').submit(function() {
-      event.preventDefault();
+    $('#createUserForm').submit((e) => {
+      e.preventDefault();
 
       var name = $('#name').val();
       var birthDate = $('#birthDate').val();
@@ -156,20 +156,37 @@
       var password = $('#password').val();
       var confirmPassword = $('#passwordConfirm').val();
 
+      // Verificando idade
+      var parts = birthDate.split('/');
+      var birthDateFormatted = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      var birthDateObj = new Date(parts[2], parts[1] - 1, parts[0]); // ano, mês, dia
+
+      var today = new Date();
+      var age = today.getFullYear() - birthDateObj.getFullYear();
+      var m = today.getMonth() - birthDateObj.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDateObj.getDate())) {
+        age--;
+      }
+
+      if (age < 18) {
+        $('#adultWarn').text('Você precisa ter pelo menos 18 anos para se cadastrar.');
+        e.preventDefault();
+        return;
+      };
       if ((password && confirmPassword).length < 4) {
         $('#passwordWarn').text('A senha precisa ter 4 caracteres!');
-        event.preventDefault();
+        e.preventDefault();
         return
       };
       if (!(password === confirmPassword)) {
         $('#passwordWarn').text('As senhas não coincidem!');
-        event.preventDefault();
+        e.preventDefault();
         return
       };
 
       var formData = {
         name: name,
-        birthDate: birthDate,
+        birthDate: birthDateFormatted,
         email: email,
         telephone: telephone,
         cellphone: cellphone,

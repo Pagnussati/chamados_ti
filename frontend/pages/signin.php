@@ -206,8 +206,10 @@
           if (jsonResponse.message === 'Usuário criado com sucesso!') {
             alert(jsonResponse.message);
             location.href = './login.php'
+          } else {
+            alert(jsonResponse.message);
           };
-        }
+        },
 
       });
     })

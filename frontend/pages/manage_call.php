@@ -122,7 +122,7 @@ include('../../backend/session/session_check.php')
       });
 
       // Carregando modal
-      $(document).on('click', '.view-call', () => {
+      $(document).on('click', '.view-call', function() {
         const chamadoId = $(this).data('id');
 
         $.ajax({

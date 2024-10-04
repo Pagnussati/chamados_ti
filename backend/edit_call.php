@@ -31,17 +31,19 @@ if ($stmt = $conn->prepare($sql)) {
   echo json_encode($response);
 };
 
-// Laco para inserir cada anexo e converter para Base64
-foreach ($_FILES['attachments']['tmp_name'] as $index => $tmpName) {
-  $fileContent = file_get_contents($tmpName);
-  $base64 = base64_encode($fileContent);
+if (isset($_FILES['attachments']) && count($_FILES['attachments']['tmp_name']) > 0) {
+  // Laco para inserir cada anexo e converter para Base64
+  foreach ($_FILES['attachments']['tmp_name'] as $index => $tmpName) {
+    $fileContent = file_get_contents($tmpName);
+    $base64 = base64_encode($fileContent);
 
-  $stmt = $conn->prepare("INSERT INTO anexos (chamado_id, arquivo_base64) VALUES (?, ?)");
-  $stmt->bind_param("is", $callId, $base64);
+    $stmt = $conn->prepare("INSERT INTO anexos (chamado_id, arquivo_base64) VALUES (?, ?)");
+    $stmt->bind_param("is", $callId, $base64);
 
-  if (!$stmt->execute()) {
-    $response = "Erro ao inserir anexo: " . $stmt->error;
-    echo $response;
-    exit;
-  }
-}
+    if (!$stmt->execute()) {
+      $response = "Erro ao inserir anexo: " . $stmt->error;
+      echo $response;
+      exit;
+    };
+  };
+};

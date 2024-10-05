@@ -57,6 +57,7 @@ include('../../backend/session/session_check.php')
           <!-- Dados dos chamados -->
         </tbody>
       </table>
+      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="show-all-button">Mostrar todos os chamados</button>
     </div>
   </div>
 
@@ -173,6 +174,45 @@ include('../../backend/session/session_check.php')
           }
         });
       });
+
+      $('#show-all-button').click(() => {
+        $.ajax({
+          url: '../../backend/show_all_calls.php',
+          type: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            if (data.error) {
+              alert(data.error);
+              return;
+            }
+
+            // Inserindo na tabela HTML
+            let html = '';
+            $.each(data, (index, chamado) => {
+              let callStatus = chamado.status === 'Aberto' ? 'openCall' : 'closedCall';
+
+              html += `
+                <tr>
+                  <td>${chamado.id}</td>
+                  <td>${chamado.tipo_incidente}</td>
+                  <td>${new Date(chamado.data_abertura).toLocaleString('pt-BR')}</td>
+                  <td class="${callStatus}">${chamado.status}</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm view-call" data-id="${chamado.id}">
+                      Visualizar
+                    </button>
+                  </td>
+                </tr>
+              `;
+            });
+
+            $('#chamados-list').html(html);
+          },
+          error: function() {
+            alert('Erro ao carregar os chamados.');
+          }
+        });
+      })
     });
   </script>
 </body>

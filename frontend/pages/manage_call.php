@@ -49,6 +49,7 @@ include('../../backend/session/session_check.php')
             <th>ID Chamado</th>
             <th>Tipo de incidente</th>
             <th>Data de abertura</th>
+            <th>Status</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -100,11 +101,14 @@ include('../../backend/session/session_check.php')
           // Inserindo na tabela HTML
           let html = '';
           $.each(data, (index, chamado) => {
+            let callStatus = chamado.status === 'Aberto' ? 'openCall' : 'closedCall';
+
             html += `
                 <tr>
                   <td>${chamado.id}</td>
                   <td>${chamado.tipo_incidente}</td>
                   <td>${new Date(chamado.data_abertura).toLocaleString('pt-BR')}</td>
+                  <td class="${callStatus}">${chamado.status}</td>
                   <td>
                     <button class="btn btn-secondary btn-sm view-call" data-id="${chamado.id}">
                       Visualizar
@@ -143,6 +147,7 @@ include('../../backend/session/session_check.php')
               <p><strong>Tipo de incidente:</strong> ${chamado.tipo_incidente}</p>
               <p><strong>Descrição:</strong> ${chamado.descricao_problema}</p>
               <p><strong>Data de Abertura:</strong> ${chamado.data_abertura}</p>
+              <p><strong>Status:</strong> ${chamado.status}</p>
               <hr>
               <h5>Histórico</h5>
               <ul>

@@ -8,6 +8,22 @@ $userName = $_SESSION['name'];
 $description = $_POST['description'];
 date_default_timezone_set('America/Sao_Paulo');
 $eventDate = date('Y-m-d H:i:s');
+$status = $_POST['status'];
+
+// Atualizando o status
+$updateStatusSql = "UPDATE chamados SET status = ? WHERE id = ?";
+if ($stmt = $conn->prepare($updateStatusSql)) {
+  $stmt->bind_param("si", $status, $callId);
+  if (!$stmt->execute()) {
+    $response = ['message' => 'Erro ao atualizar o status do chamado'];
+    echo json_encode($response);
+    exit;
+  }
+} else {
+  $response = ['message' => 'Erro ao preparar a query de atualização do status'];
+  echo json_encode($response);
+  exit;
+}
 
 //Preparando a declaração SQL
 $sql = "INSERT INTO historico_chamados (chamado_id, nome_usuario, descricao, data_evento)

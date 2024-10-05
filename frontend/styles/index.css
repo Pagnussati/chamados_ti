@@ -14,3 +14,11 @@ body {
   align-items: center;
   flex-grow: 1;
 }
+
+.openClass {
+  color: greenyellow;
+}
+
+.closedCall {
+  color: red;
+}

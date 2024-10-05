@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/10/2024 às 23:28
+-- Tempo de geração: 05/10/2024 às 18:18
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -44,7 +44,8 @@ CREATE TABLE `chamados` (
   `usuario_id` int(11) NOT NULL,
   `descricao_problema` text NOT NULL,
   `tipo_incidente` varchar(255) NOT NULL,
-  `data_abertura` datetime NOT NULL
+  `data_abertura` datetime NOT NULL,
+  `status` varchar(50) DEFAULT 'Aberto'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

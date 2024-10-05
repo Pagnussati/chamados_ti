@@ -54,6 +54,14 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
         <label for="attachments" class="form-label">Anexos</label>
         <input type="file" id="attachments" name="attachments[]" class="form-control" multiple>
       </div>
+      <div class="mb-3">
+        <label for="status" class="form-label">Status do Chamado</label>
+        <select id="status" name="status" class="form-select" required>
+          <option value="Aberto">Aberto</option>
+          <option value="Em Andamento">Em Andamento</option>
+          <option value="Fechado">Fechado</option>
+        </select>
+      </div>
       <button type="submit" class="btn btn-primary mb-3" id="createCall">Editar Chamado</button>
     </form>
   </div>
@@ -69,9 +77,10 @@ $callId = isset($_GET['id']) ? intval($_GET['id']) : 0;
         e.preventDefault();
         var formData = new FormData();
 
-        // Inserindo descricao da alteracao e o id do chamado no formData
+        // Inserindo descricao da alteracao o id do chamado e o status no formData
         formData.append('callId', $('#callId').val());
         formData.append('description', $('#description').val());
+        formData.append('status', $('#status').val());
 
         // Inserindo os anexos ao formData
         const files = $('#attachments')[0].files;

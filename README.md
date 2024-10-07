@@ -19,7 +19,7 @@ Este projeto consiste em um sistema de abertura e gerenciamento de chamados para
 
 - Primeiro clone este repositório na pasta "htdocs" do seu XAMPP.
 - Após isto, inicialize o Apache e o MySql do seu XAMPP e abra seu localhost no navegador.
-- Importe o formato do banco de dados que está na pasta "database" do projeto.
+- Importe o formato do banco de dados que está na pasta "database" do projeto (nomeie o banco de dados que você irá importar o formato de "chamados_ti").
 - Agora é só abrir a pasta do projeto no localhost e utilizar o sistema!
 
 ## Feito por

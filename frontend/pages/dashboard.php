@@ -40,28 +40,30 @@ include('../../backend/session/session_check.php')
     </div>
   </nav>
 
-  <div class="container mt-5">
-    <h1 class="text-center">Bem-vindo, <?php echo $_SESSION['name']; ?>!</h1>
-    <div class="card mt-4">
-      <div class="card-header bg-secondary text-white">
-        <h4>Informações do Sistema</h4>
-      </div>
-      <div class="card-body">
-        <p>
-          Você está logado como <strong><?php echo $_SESSION['name']; ?></strong>. Aqui estão algumas funcionalidades disponíveis:
-        </p>
-        <ul>
-          <li><strong>Abrir Chamados:</strong> Registre novos chamados para problemas técnicos clicando na opção "Abrir chamado" logo acima.</li>
-          <li><strong>Gerenciar Chamados:</strong> Visualize e edite os chamados que você abriu clicando na opção "Gerenciar chamados" logo acima.</li>
-          <li><strong>Adicionar Anexos:</strong> Inclua arquivos relevantes aos seus chamados clicando na opção "Editar" na página "Gerenciar chamados".</li>
-          <li><strong>Visualizar Histórico:</strong> Acompanhe todas as atualizações e atividades relacionadas aos seus chamados clicando na opção "Visualizar" da página "Gerenciar chamados".</li>
-        </ul>
-        <p>
-          Utilize o menu acima para navegar pelo sistema.
-        </p>
-      </div>
-      <div class="card-footer text-muted">
-        Site desenvolvido com muito ☕ por <strong>João Gabriel Pagnussati</strong>
+  <div class="main-div">
+    <div class="container mt-5">
+      <h1 class="text-center">Bem-vindo, <?php echo $_SESSION['name']; ?>!</h1>
+      <div class="card mt-4">
+        <div class="card-header bg-secondary text-white">
+          <h4>Informações do Sistema</h4>
+        </div>
+        <div class="card-body">
+          <p>
+            Você está logado como <strong><?php echo $_SESSION['name']; ?></strong>. Aqui estão algumas funcionalidades disponíveis:
+          </p>
+          <ul>
+            <li><strong>Abrir Chamados:</strong> Registre novos chamados para problemas técnicos clicando na opção "Abrir chamado" logo acima.</li>
+            <li><strong>Gerenciar Chamados:</strong> Visualize e edite os chamados que você abriu clicando na opção "Gerenciar chamados" logo acima.</li>
+            <li><strong>Adicionar Anexos:</strong> Inclua arquivos relevantes aos seus chamados clicando na opção "Editar" na página "Gerenciar chamados".</li>
+            <li><strong>Visualizar Histórico:</strong> Acompanhe todas as atualizações e atividades relacionadas aos seus chamados clicando na opção "Visualizar" da página "Gerenciar chamados".</li>
+          </ul>
+          <p>
+            Utilize o menu acima para navegar pelo sistema.
+          </p>
+        </div>
+        <div class="card-footer text-muted">
+          Site desenvolvido com muito ☕ por <strong>João Gabriel Pagnussati</strong>
+        </div>
       </div>
     </div>
   </div>

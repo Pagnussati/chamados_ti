@@ -34,6 +34,9 @@
   </nav>
 
   <div class="form-div">
+    <div id="flash-message" class="alert alert-danger d-none" role="alert">
+      Usuário ou senha incorretos. Tente novamente.
+    </div>
     <form id="login-form">
       <div class="row mb-3">
         <label for="email" class="col-sm-2 col-form-label-lg">Email</label>
@@ -63,6 +66,7 @@
 
         var email = $('#email').val();
         var password = $('#password').val();
+        $('#flash-message').addClass('d-none').text(''); // limpando a mensagem anterior
 
         $.ajax({
           type: 'POST',
@@ -75,7 +79,10 @@
             if (response === "Login successful!") {
               window.location.href = 'dashboard.php';
             } else {
-              alert(response);
+              //alert(response)
+              $('#email').val('');
+              $('#password').val('');
+              $('#flash-message').removeClass('d-none').text(response);
             };
           }
         });

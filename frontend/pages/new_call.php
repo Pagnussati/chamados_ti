@@ -42,6 +42,9 @@ include('../../backend/session/session_check.php')
   </nav>
 
   <div class="container mt-5">
+    <div id="flash-message-success" class="alert alert-success d-none" role="alert">
+      <!-- MENSAGEM VINDA DO BAKCKEND -->
+    </div>
     <h1>Abrir Chamado</h1>
     <form id="newCallForm">
       <div class="mb-3">
@@ -138,8 +141,7 @@ include('../../backend/session/session_check.php')
             // convertendo o resposta JSON em string
             let jsonResponse = typeof response === "string" ? JSON.parse(response) : response;
             if (jsonResponse.message === 'Chamado criado com sucesso!') {
-              alert(jsonResponse.message);
-              location.reload();
+              $('#flash-message-success').removeClass('d-none').text(response);
             }
           },
           error: (jqXHR, textStatus, errorThrown) => {

@@ -140,8 +140,9 @@ include('../../backend/session/session_check.php')
           success: (response) => {
             // convertendo o resposta JSON em string
             let jsonResponse = typeof response === "string" ? JSON.parse(response) : response;
-            if (jsonResponse.message === 'Chamado criado com sucesso!') {
-              $('#flash-message-success').removeClass('d-none').text(response);
+            message = jsonResponse.message
+            if (message === 'Chamado criado com sucesso!') {
+              $('#flash-message-success').removeClass('d-none').text(message);
             }
           },
           error: (jqXHR, textStatus, errorThrown) => {
